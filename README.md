@@ -10,7 +10,7 @@ Sorin Search Filter is a [Sorin](https://github.com/seulibrary/Sorin) extension 
 def deps do
   [
     ...,
-    {:sorin_search_filter, path: "https://github.com/seulibrary/Sorin-Search-Filter"},
+    {:sorin_search_filter, git: "https://github.com/seulibrary/Sorin-Search-Filter"},
   ]
 end
 ```
