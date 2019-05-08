@@ -1,0 +1,123 @@
+.search-filters {
+    position: fixed;
+    width: 90px;
+    right: 0;
+    height: auto;
+    top: 330px;
+    z-index: 2;
+
+    h3 {
+        background-color: #4E8496;
+        width: 90px;
+        color: white;
+        font-weight: 700;
+        padding: 1em;
+        display: block;
+        right: 0px;
+        font-size: 1em;
+        cursor: pointer;
+        margin: 0;
+    }
+
+    h3:hover {
+        background-color: #117E03;
+    }
+
+    @media (max-width: 968px) {
+        top: 200px;
+        display: block;
+        width: 70px;
+
+        h3 {
+            padding: 0.5em;
+            font-size: .875em;
+            width: 70px;
+        }
+    }
+}
+
+
+.search-fields {
+    padding: 20px;
+    background-color: white;
+    position: fixed;
+    -webkit-transition: right 0.25s ease;
+    transition: right 0.25s ease;
+    min-width: 200px;
+    background-color: #F4F4F4;
+    overflow-x: auto;
+    height: 100%;
+    box-shadow: -3px 1px 10px 4px rgba(0, 0, 0, 0.3);
+    top: 0;
+
+    .search-close {
+        // This is a suplicate of .window-close
+        float: right;
+        direction: block;
+        cursor: pointer;
+        background: url(../images/CLOSEX.svg) center center no-repeat;
+        -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/img/magnifying-glass.svg', sizingMethod='scale')";
+        background-size: 20px;
+        border: 0;
+        height: 20px;
+        text-indent: -999999px;
+        width: 20px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+
+    h4 {
+        margin-top: 10px;
+        color: #4E8496;
+    }
+
+    h5 {
+        margin: .5em 0;
+    }
+
+    .search-group {
+        margin-bottom: 40px;
+
+        div {
+            margin-bottom: .5em;
+
+            input {
+                margin-right: .5em;
+            }
+        }
+
+        &.date-range {
+            div {
+                input {
+                    width: 100%;
+                    max-width: 80px;
+                    margin-right: .25em;
+                    margin-left: .25em;
+                }
+            }
+        }
+    }
+
+    #search-submit-btn-two {
+        background-color: #4E8496;
+        color: white;
+        padding: .75em 1.5em;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-radius: 4px;
+    }
+}
+
+.search-fields.closed {
+    right: -240px;
+    z-index: 0;
+    opacity: 0;
+    display: none;
+}
+
+.search-fields.open {
+    right: 0px;
+    z-index: 40;
+    opacity: 1;
+    display: block;
+}
