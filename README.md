@@ -1,6 +1,6 @@
 # SorinSearchFilter
 
-Sorin Search Filter is a Sorin extension that provides an extensible, customizable framework for building a front end panel for search filters, populating it with specified filters, and supplying the filters to the active search catalog extension, which must then be edited to add in filter parsing functions.
+Sorin Search Filter is a [Sorin](https://github.com/seulibrary/Sorin) extension that provides an extensible, customizable framework for building a front end panel for search filters, populating it with specified filters, and supplying the filters to the active search catalog extension, which must then be edited to add in filter parsing functions.
 
 ## Installation
 
