@@ -11,21 +11,25 @@ import "./SearchFilter.scss"
 const RangeWithTooltip = Slider.createSliderWithTooltip(Range)
 
 class SearchFilter extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     componentWillMount() {
         this.props.extensions.searchFilter.map( filters => {
             filters.settings.map( filter => {
                 if (filter.format === "slider_and_boxes") {
                     filter.entries.map( entry => {
-                        this.props.dispatch(
-                            setFilters({    
-                                [entry.min_variable]: entry.min_value,
-                                [entry.max_variable]: entry.max_value
-                            }))
-                    })                    
+                        // ONLY set state if it does not exist!
+                        if (!this.props.searchFilters.searchFilters.hasOwnProperty(entry.min_variable)) {
+                            this.props.dispatch(
+                                setFilters({    
+                                    [entry.min_variable]: entry.min_value,
+                                }))
+                        }
+                        if (!this.props.searchFilters.searchFilters.hasOwnProperty(entry.max_variable)) {
+                            this.props.dispatch(
+                                setFilters({    
+                                    [entry.max_variable]: entry.max_value
+                                }))
+                        }
+                    })
                 }
             })
         })
@@ -59,7 +63,7 @@ class SearchFilter extends Component {
             }
         }
     }
-
+   
     onChange = (e) => {
         this.props.dispatch(setFilters(
             {
@@ -71,7 +75,7 @@ class SearchFilter extends Component {
     onCheckBoxChange = (e) => {
         this.props.dispatch(setFilters(
             {
-                [e.target.name]: !this.props.searchFilters.searchFilters[e.target.value]
+                [e.target.name]: !(e.target.value == "true")
             }
         ))
     }
@@ -84,7 +88,6 @@ class SearchFilter extends Component {
         let elements = filter.entries.map((entry, index) => {
             return this.buildFilter(filter, entry, index)
         })
-
         
         return React.createElement("div", {
             className: "search-group",
@@ -93,10 +96,14 @@ class SearchFilter extends Component {
     }
 
     buildFilter = (filter, entry, index) => {
-        
         let input = () => {
             switch(filter.format) {
             case "checkbox":
+                // Check to see if value of checkbox should be checked. Checks for both string and bool value
+                // Late where the variable is used, it also checks to see if the value is undefined. If it is,
+                // it will convert it to false.
+                let isChecked = this.props.searchFilters.searchFilters[entry.variable] == "true" || this.props.searchFilters.searchFilters[entry.variable] == true
+                
                 return [React.createElement("label", {
                     key: "sf_label_" + entry.variable + index,
                     htmlFor: entry.variable
@@ -108,7 +115,8 @@ class SearchFilter extends Component {
                         name: entry.variable,
                         id: entry.variable,
                         onChange: this.onCheckBoxChange,
-                        value: this.props.searchFilters.searchFilters[entry.variable]
+                        value:  isChecked === undefined ? false : isChecked,
+                        checked: isChecked === undefined ? false : isChecked
                     })]
             case "radio":
                 return [React.createElement("label", {
@@ -119,16 +127,22 @@ class SearchFilter extends Component {
                     {
                         key: "sf_r_" + entry.variable + index,
                         type: "radio",
-                        name: filter.group,
+                        name: filter.variable,
                         id: entry.variable,
                         value: entry.variable,
                         onChange: this.onChange,
-                        checked: this.props.searchFilters.searchFilters[filter.group] === entry.variable
+                        checked: (this.props.searchFilters.searchFilters[filter.variable] === entry.variable)
                     })]
             case "slider_and_boxes":
+                let min_value = (typeof this.props.searchFilters.searchFilters[entry.min_variable] === "string" ? parseInt(this.props.searchFilters.searchFilters[entry.min_variable]) : this.props.searchFilters.searchFilters[entry.min_variable]) || entry.min_value
+
+                let max_value = (typeof this.props.searchFilters.searchFilters[entry.max_variable] === "string" ? 
+                parseInt(this.props.searchFilters.searchFilters[entry.max_variable]) :
+                this.props.searchFilters.searchFilters[entry.max_variable]) || entry.max_value
+                
                 return <React.Fragment key={"years_sf_slider_" + index}>
                     <RangeWithTooltip
-                        value={[this.props.searchFilters.searchFilters[entry.min_variable], this.props.searchFilters.searchFilters[entry.max_variable]]}
+                        value={[min_value, max_value]}
                         min={entry.min_value}
                         key={"sf_slider_" + entry.variable + index}
                         max={entry.max_value}
@@ -137,23 +151,22 @@ class SearchFilter extends Component {
                     />
 
                     <label>{entry.label}: </label>
+                    
                     <input 
                         type="number" 
                         name={entry.min_variable} 
                         min={entry.min_value} 
                         max={entry.max_value} 
-                        defaultValue={this.props.searchFilters.searchFilters[entry.min_variable]} 
+                        value={min_value} 
                         onChange={this.onSliderChange} />
                     to 
                     <input 
                         type="number" 
-
                         name={entry.max_variable} 
-                        min={entry.min_variable} 
+                        min={entry.min_value} 
                         max={entry.max_value} 
-                        defaultValue={this.props.searchFilters.searchFilters[entry.max_variable]} 
+                        value={max_value} 
                         onChange={this.onSliderChange} />
-
                 </React.Fragment>
             default:
                 return ""
