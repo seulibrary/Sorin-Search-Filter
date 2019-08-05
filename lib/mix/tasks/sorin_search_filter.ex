@@ -10,7 +10,7 @@ defmodule Mix.Tasks.SorinSearchFilter do
     |> Jason.encode!
     
     # Where the config.json needs to live
-    search_filter_path = "apps/frontend/assets/js/extensions/SorinSearchFilter"
+    search_filter_path = "apps/frontend/assets/js/extensions/sorin_search_filter"
 
     File.write!(search_filter_path <> "/config.json", json_config)
     File.close(search_filter_path <> "/config.json")
