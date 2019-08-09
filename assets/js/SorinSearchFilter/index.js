@@ -104,11 +104,8 @@ class SearchFilter extends Component {
                 // it will convert it to false.
                 let isChecked = this.props.searchFilters.searchFilters[entry.variable] == "true" || this.props.searchFilters.searchFilters[entry.variable] == true
                 
-                return [React.createElement("label", {
-                    key: "sf_label_" + entry.variable + index,
-                    htmlFor: entry.variable
-                }, entry.label)
-                , React.createElement("input", 
+                return [
+                    React.createElement("input", 
                     {
                         key: "sf_cb_" + index,
                         type: "checkbox",
@@ -117,13 +114,15 @@ class SearchFilter extends Component {
                         onChange: this.onCheckBoxChange,
                         value:  isChecked === undefined ? false : isChecked,
                         checked: isChecked === undefined ? false : isChecked
-                    })]
-            case "radio":
-                return [React.createElement("label", {
+                    }),
+                    React.createElement("label", {
                     key: "sf_label_" + entry.variable + index,
                     htmlFor: entry.variable
-                }, entry.label),
-                React.createElement("input",
+                    }, entry.label)
+                ]
+            case "radio":
+                return [
+                    React.createElement("input",
                     {
                         key: "sf_r_" + entry.variable + index,
                         type: "radio",
@@ -132,7 +131,12 @@ class SearchFilter extends Component {
                         value: entry.variable,
                         onChange: this.onChange,
                         checked: (this.props.searchFilters.searchFilters[filter.variable] === entry.variable)
-                    })]
+                    }),
+                    React.createElement("label", {
+                        key: "sf_label_" + entry.variable + index,
+                        htmlFor: entry.variable
+                        }, entry.label)
+                    ]
             case "slider_and_boxes":
                 let min_value = (typeof this.props.searchFilters.searchFilters[entry.min_variable] === "string" ? parseInt(this.props.searchFilters.searchFilters[entry.min_variable]) : this.props.searchFilters.searchFilters[entry.min_variable]) || entry.min_value
 
