@@ -128,41 +128,44 @@ class SearchFilter extends Component {
     buildFilter = (filter, entry, index) => {
         let input = () => {
             switch(filter.format) {
-            case "checkbox":
-                // Check to see if value of checkbox should be checked. Checks for both string and bool value
-                // Late where the variable is used, it also checks to see if the value is undefined. If it is,
-                // it will convert it to false.
-                let isChecked = this.props.searchFilters.searchFilters[entry.variable] == "true" || this.props.searchFilters.searchFilters[entry.variable] == true
-                
-                return [React.createElement("label", {
-                    key: "sf_label_" + entry.variable + index,
-                    htmlFor: entry.variable
-                }, entry.label)
-                , React.createElement("input", 
-                    {
-                        key: "sf_cb_" + index,
-                        type: "checkbox",
-                        name: entry.variable,
-                        id: entry.variable,
-                        onChange: this.onCheckBoxChange,
-                        value:  isChecked === undefined ? false : isChecked,
-                        checked: isChecked === undefined ? false : isChecked
-                    })]
-            case "radio":
-                return [React.createElement("label", {
-                    key: "sf_label_" + entry.variable + index,
-                    htmlFor: entry.variable
-                }, entry.label),
-                React.createElement("input",
-                    {
-                        key: "sf_r_" + entry.variable + index,
-                        type: "radio",
-                        name: filter.variable,
-                        id: entry.variable,
-                        value: entry.variable,
-                        onChange: this.onChange,
-                        checked: (this.props.searchFilters.searchFilters[filter.variable] === entry.variable)
-                    })]
+                case "checkbox":
+                    // Check to see if value of checkbox should be checked. Checks for both string and bool value
+                    // Late where the variable is used, it also checks to see if the value is undefined. If it is,
+                    // it will convert it to false.
+                    let isChecked = this.props.searchFilters.searchFilters[entry.variable] == "true" || this.props.searchFilters.searchFilters[entry.variable] == true
+                    
+                    return [
+                        React.createElement("input", 
+                        {
+                            key: "sf_cb_" + index,
+                            type: "checkbox",
+                            name: entry.variable,
+                            id: entry.variable,
+                            onChange: this.onCheckBoxChange,
+                            value:  isChecked === undefined ? false : isChecked,
+                            checked: isChecked === undefined ? false : isChecked
+                        }), React.createElement("label", {
+                            key: "sf_label_" + entry.variable + index,
+                            htmlFor: entry.variable
+                        }, entry.label)
+                    ]
+                case "radio":
+                    return [
+                        React.createElement("input",
+                        {
+                            key: "sf_r_" + entry.variable + index,
+                            type: "radio",
+                            name: filter.variable,
+                            id: entry.variable,
+                            value: entry.variable,
+                            onChange: this.onChange,
+                            checked: (this.props.searchFilters.searchFilters[filter.variable] === entry.variable)
+                        }),
+                        React.createElement("label", {
+                            key: "sf_label_" + entry.variable + index,
+                            htmlFor: entry.variable
+                        }, entry.label)
+                    ]
             case "slider_and_boxes":
                 // Check to make sure redux is set up with filters before trying to render this.
                 if (this.props.searchFilters.searchFilters.hasOwnProperty(this.state.filterVariable)) {
