@@ -1,54 +1,135 @@
-.search-filters {
-    position: fixed;
-    width: 90px;
-    right: 0;
-    height: auto;
-    top: 330px;
-    z-index: 2;
+$newGreen: #006F63;
 
-    h3 {
-        background-color: #4E8496;
-        width: 90px;
-        color: white;
+#search-dropdown{
+	display: none;
+}
+
+.search-filters {
+    
+    right: 80px;
+    height: auto;
+    top: 12%;
+    z-index: 2;
+    position: absolute;
+    border-left: 1px solid $newGreen;
+    border-right: 1px solid $newGreen;
+
+
+    h3, a {
+
+        color: $newGreen;
         font-weight: 700;
         padding: 1em;
         display: block;
         right: 0px;
         font-size: 1em;
+        font-weight: 400;
+        text-transform: uppercase;
         cursor: pointer;
         margin: 0;
+        padding: 1.5em;
+        
+        #search-arrow{
+	        background-image: url(../images/search-arrow.svg);
+		    background-repeat: no-repeat;
+		    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/assets/img/search-arrow.svg', sizingMethod='scale')";
+		    -webkit-background-size: 18px;
+		    -moz-background-size: 18px;
+		    -o-background-size: 18px;
+		    background-position: center center;
+		    background-size: 18px;
+		    transform: rotate(-90deg);
+		    transition: .1s;
+		    width: 18px;
+		    height: 18px;
+		    display: inline-block;
+		    top: 4px;
+		    position: relative;
+		        margin-left: .5em;
+		        
+		         @media  (max-width: 508px) {
+			         display: none;
+			     }
+        }
+        
+        
     }
 
     h3:hover {
-        background-color: #117E03;
+        //background-color: #117E03;
     }
+     @media (min-width: 1301px) and (max-width: 1700px) {
+	     top: 5%;
+	     
+	 }
+	 
+	 @media (min-width: 969px) and (max-width: 1300px) {
+	     top: 2%;
+	     
+	     h3, a {
+	        
+            padding: 1.25em;
+        }
+	     
+	 }
+    
 
-    @media (max-width: 968px) {
-        top: 200px;
-        display: block;
-        width: 70px;
+    @media (min-width: 509px) and (max-width: 968px) {
+	    top: 2%;
+		right: 60px;
 
-        h3 {
-            padding: 0.5em;
-            font-size: .875em;
-            width: 70px;
+
+        h3, a {
+	        font-size: .75em;
+            padding: .875em;
         }
     }
+    
+    @media  (max-width: 508px) {
+	        position: relative;
+
+		    
+		    /* color: white; */
+		    display: inline-block;
+
+		    float: right;
+		    border-left: none;
+			border-right: none;
+			
+			    top: 0px;
+		    right: 0;
+		    text-align: center;
+
+
+        h3, a {
+	        font-size: 1em;
+            padding: 0;
+            
+        }
+    }
+    
+    a.open{
+	     #search-arrow{
+		   transform: rotate(0deg) !important;
+		   transition: .1s;  
+		     
+		}
+    }
+    
+    
 }
 
 
 .search-fields {
     padding: 20px;
     background-color: white;
-    position: fixed;
-    -webkit-transition: right 0.25s ease;
-    transition: right 0.25s ease;
-    min-width: 200px;
-    background-color: #F4F4F4;
+    position: absolute;
+    left: 0;
+    top: 80px;
+    
     overflow-x: auto;
-    height: 100%;
-    box-shadow: -3px 1px 10px 4px rgba(0, 0, 0, 0.3);
-    top: 0;
+    box-shadow: -3px 1px 10px 4px rgba(0, 0, 0, 0.1);
+   
 
     .search-close {
         // This is a suplicate of .window-close
@@ -74,9 +155,53 @@
     h5 {
         margin: .5em 0;
     }
+    
+    #searchGroups{
+	    display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
 
     .search-group {
-        margin-bottom: 40px;
+        margin-bottom: 10px;
+        
+        
+        input[type=checkbox], input[type=radio] {
+          display: none;
+        }
+        
+        h5{
+	        font-size: 16px;
+	        font-weight: 600;
+	        color: $newGreen;
+	        padding-bottom: .5em;
+		    border-bottom: 1px solid $newGreen;
+		    margin-right: 1em;
+        }
+    
+        label {
+        border-radius: 3px;
+        //background-color: #9B9B9B;
+        //text-align: center;
+        font-size: 14px;
+        cursor: pointer;
+        color: $newGreen;
+        padding: .25em .5em;
+        width: 100%;
+            &:hover {
+                background-color: $newGreen;
+                color: white;
+            }
+        }
+
+        input:checked + label {
+            background: $newGreen;
+            color: white;
+            &:hover {
+            background-color:  $newGreen;
+            
+            }
+        }
+
 
         div {
             margin-bottom: .5em;
@@ -99,12 +224,13 @@
     }
 
     #search-submit-btn-two {
-        background-color: #4E8496;
+        background-color: $newGreen;
         color: white;
         padding: .75em 1.5em;
         font-weight: 700;
         text-transform: uppercase;
         border-radius: 4px;
+            float: right;
     }
 }
 
