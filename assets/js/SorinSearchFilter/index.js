@@ -213,8 +213,7 @@ class SearchFilter extends Component {
 
     render() {
         const showFilterClass = this.props.searchFilters.searchFiltersHidden ? "open" : "closed"
-        console.log(this.state)
-        console.log(this.state.minValue)
+
         if (!this.props.extensions.searchFilter) {
             return null
         } 
