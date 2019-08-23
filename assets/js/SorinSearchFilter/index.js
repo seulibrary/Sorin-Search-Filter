@@ -41,11 +41,12 @@ class SearchFilter extends Component {
                             minValue: entry.min_value,
                             maxValue: entry.max_value
                         })
+                       
 
                         if (!this.props.searchFilters.searchFilters.hasOwnProperty(filter.variable)) {
                             this.props.dispatch(
                                 setFilters({
-                                    [filter.variable]: [entry.min_value, entry.max_value]
+                                    [filter.variable]: entry.min_value + "," + entry.max_value
                                 }))
                         }
                     })
@@ -67,7 +68,7 @@ class SearchFilter extends Component {
         if (value.length > 0) {
             this.props.dispatch(
                 setFilters({
-                    [this.state.filterVariable]: [parseInt(value[0]), parseInt(value[1])]
+                    [this.state.filterVariable]: (parseInt(value[0]) || this.state.minValue) + "," + (parseInt(value[1]) || this.state.maxValue)
                 })
             )
         } else {
@@ -78,7 +79,7 @@ class SearchFilter extends Component {
 
                 this.props.dispatch(
                     setFilters({
-                        [this.state.filterVariable]: [data, this.props.searchFilters.searchFilters[this.state.filterVariable][1]]
+                        [this.state.filterVariable]: data + "," + (this.props.searchFilters.searchFilters[this.state.filterVariable].split(",")[1])
                     })
                 )
             }
@@ -88,7 +89,7 @@ class SearchFilter extends Component {
 
                 this.props.dispatch(
                     setFilters({
-                        [this.state.filterVariable]: [this.props.searchFilters.searchFilters[this.state.filterVariable][0], data]
+                        [this.state.filterVariable]: this.props.searchFilters.searchFilters[this.state.filterVariable].split(",")[0] + "," + data
                     })
                 )
             }
@@ -170,9 +171,9 @@ class SearchFilter extends Component {
             case "slider_and_boxes":
                 // Check to make sure redux is set up with filters before trying to render this.
                 if (this.props.searchFilters.searchFilters.hasOwnProperty(this.state.filterVariable)) {
-                    let min_value = (typeof this.props.searchFilters.searchFilters[this.state.filterVariable][0] === "string" ? parseInt(this.props.searchFilters.searchFilters[this.state.filterVariable][0]) : this.props.searchFilters.searchFilters[this.state.filterVariable][0]) || ""
-
-                    let max_value = (typeof this.props.searchFilters.searchFilters[this.state.filterVariable][1] === "string" ? parseInt(this.props.searchFilters.searchFilters[this.state.filterVariable][1]) : this.props.searchFilters.searchFilters[this.state.filterVariable][1]) || ""
+                    let min_value = parseInt(this.props.searchFilters.searchFilters[this.state.filterVariable].split(",")[0]) || this.state.minValue
+                    
+                    let max_value = parseInt(this.props.searchFilters.searchFilters[this.state.filterVariable].split(",")[1]) || this.state.maxValue
                     
                     return <React.Fragment key={"years_sf_slider_" + index}>
                         <RangeWithTooltip
@@ -214,6 +215,9 @@ class SearchFilter extends Component {
     render() {
         const showFilterClass = this.props.searchFilters.searchFiltersHidden ? "open" : "closed"
 
+        if (!this.props.extensions.searchFilter) {
+            return null
+        } 
         return (
             <div>
                 <div className="search-filters">
