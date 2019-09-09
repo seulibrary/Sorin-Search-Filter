@@ -27,7 +27,7 @@ class SearchFilter extends Component {
         this.props.extensions.searchFilter.map( filters => {
             filters.settings.map( filter => {
                 if (filter.format === "slider_and_boxes") {
-                    // Store the filer Variable name in local state for use in other functions without having to 
+                    // Store the filter Variable name in local state for use in other functions without having to 
                     // go through all the filters again.
                     this.setState({filterVariable: filter.variable})
                     filter.entries.map( entry => {
@@ -63,7 +63,13 @@ class SearchFilter extends Component {
  
         })
     }
-    
+
+    onSumbit = (e) => {
+        e.preventDefault()
+        this.toggleFilter()
+        this.props.onSumbit(e)
+    }
+
     onSliderChange = (value) => {
         if (value.length > 0) {
             this.props.dispatch(
@@ -217,27 +223,23 @@ class SearchFilter extends Component {
 
         if (!this.props.extensions.searchFilter) {
             return null
-        } 
+        }
+
         return (
             <div>
-                <div className="search-filters">
-                    <a onClick={this.toggleFilter} className={showFilterClass +" filter"}>Filter<span id="search-arrow"></span></a>
-                </div>
-                
-                <div className={showFilterClass +" search-fields"} >
+                <div className={showFilterClass + " search-fields"}>
                     <a className="search-close" onClick={this.toggleFilter}>x</a>
                     
                     <div id="searchGroups">
-                    
-                    {this.props.extensions.searchFilter[this.props.index].settings.map( filter => {
-                        return this.buildSections(filter)
-                    })}
+                        {this.props.extensions.searchFilter[this.props.index].settings.map( filter => {
+                            return this.buildSections(filter)
+                        })}
                     </div>
 
                     <input type="button"
                         value="Apply Filters"
                         id="search-submit-btn-two"
-                        onClick={this.props.onSumbit} />
+                        onClick={this.onSumbit} />
                 </div> 
             </div>
         )
