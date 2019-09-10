@@ -164,6 +164,15 @@ $topMinWidth: 768px;
                 background-color: $newGreen;
                 color: white;
             }
+
+            &.block {
+                display: block;
+            }
+        }
+        
+        .noHover:hover {
+            background-color: inherit;
+            color: $newGreen;
         }
 
         input:checked + label {
@@ -180,6 +189,7 @@ $topMinWidth: 768px;
 
             input {
                 margin-right: .5em;
+                width: 40%;
             }
         }
 
