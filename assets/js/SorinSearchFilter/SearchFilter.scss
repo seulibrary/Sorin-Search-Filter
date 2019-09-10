@@ -14,8 +14,6 @@ $topMinWidth: 768px;
 }
 
 .search-filter-button {
-    border-left: 1px solid $newGreen;
-    border-right: 1px solid $newGreen;
     cursor: pointer;
     height: 100%;
     line-height: 1.5em;
@@ -26,12 +24,12 @@ $topMinWidth: 768px;
 
     span {
         color: $newGreen;
-        display: block;
         font-size: 1em;
         font-weight: 400;
         height: 100%;
         padding: 0 15px;
         text-transform: uppercase;
+        vertical-align: sub;
         
         #search-arrow {
 	        background-image: url(/images/search-arrow.svg);
@@ -78,6 +76,7 @@ $topMinWidth: 768px;
         span {
 	        font-size: 1em;
             padding: 0;
+            vertical-align: inherit;
         }
     }
     
