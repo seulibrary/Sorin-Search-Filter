@@ -182,23 +182,23 @@ class SearchFilter extends Component {
                     let max_value = parseInt(this.props.searchFilters.searchFilters[this.state.filterVariable].split(",")[1]) || this.state.maxValue
                     
                     return <React.Fragment key={"years_sf_slider_" + index}>
-                        <RangeWithTooltip
+                        {/* <RangeWithTooltip
                             value={[min_value, max_value]}
                             min={entry.min_value}
                             key={"sf_slider_" + entry.variable + index}
                             max={entry.max_value}
                             onChange={this.onSliderChange}
                             onAfterChange={this.onSliderChange}
-                        />
+                        /> */}
 
-                        <label>{entry.label}: </label>
+                        <label className="noHover block">{entry.label}: </label>
                         
                         <input 
                             type="number" 
                             name={entry.min_variable} 
                             min={entry.min_value} 
                             max={entry.max_value} 
-                            value={min_value} 
+                            defaultValue={min_value} 
                             onChange={this.onSliderChange} />
                         to 
                         <input 
@@ -206,7 +206,7 @@ class SearchFilter extends Component {
                             name={entry.max_variable} 
                             min={entry.min_value} 
                             max={entry.max_value} 
-                            value={max_value} 
+                            defaultValue={max_value} 
                             onChange={this.onSliderChange} />
                     </React.Fragment>
                 }
